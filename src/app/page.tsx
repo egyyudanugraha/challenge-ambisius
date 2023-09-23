@@ -43,12 +43,14 @@ const Home = () => {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="menu" className="w-full">
-            <div className="flex gap-2 w-full">
-              <TabsList className="flex gap-2 w-full">
-                <TabsTrigger value="menu" className="w-full">Menu</TabsTrigger>
-                <TabsTrigger value="order" className="w-full">Order</TabsTrigger>
-                <TabsTrigger value="dapur" className="w-full">Dapur</TabsTrigger>
-                <TabsTrigger value="kasir" className="w-full">Kasir</TabsTrigger>
+            <div className="flex flex-col md:flex-row gap-2 w-full">
+              <TabsList>
+                <div className="flex gap-2 w-full overflow-y-auto">
+                  <TabsTrigger value="menu" className="w-full">Menu</TabsTrigger>
+                  <TabsTrigger value="order" className="w-full">Order</TabsTrigger>
+                  <TabsTrigger value="dapur" className="w-full">Dapur</TabsTrigger>
+                  <TabsTrigger value="kasir" className="w-full">Kasir</TabsTrigger>
+                </div>
               </TabsList>
               <ResetButton />
             </div>
