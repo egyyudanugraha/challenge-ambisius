@@ -21,7 +21,7 @@ const DeleteButton = ({ data, handleDelete }: DeleteButtonProps) => {
           <Trash2 className="h-4 w-4" />
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="w-[90%]">
         <AlertDialogHeader>
           <AlertDialogTitle>Apakah anda yakin?</AlertDialogTitle>
           <AlertDialogDescription>

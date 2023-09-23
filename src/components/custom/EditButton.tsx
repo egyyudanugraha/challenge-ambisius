@@ -37,7 +37,7 @@ const EditButton = ({ data, handleAction }: EditButtonProps) => {
           <Pencil className="h-4 w-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="w-[90%]">
         <DialogHeader>
           <DialogTitle>Ubah Menu</DialogTitle>
           <DialogDescription>
