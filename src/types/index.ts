@@ -15,6 +15,11 @@ export interface AddMenuProps {
   handleAddMenu: (data: Menu) => void;
 }
 
+export interface EditButtonProps {
+  data: Menu;
+  handleAction: (data: Menu) => void;
+}
+
 export interface DeleteButtonProps {
   data: Menu;
   handleDelete: (id: number) => void;

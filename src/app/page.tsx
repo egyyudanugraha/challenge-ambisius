@@ -1,3 +1,5 @@
+'use client';
+
 import ResetButton from "@/components/custom/ResetButton";
 import MenuSection from "@/components/custom/section/MenuSection"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -5,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Github, Globe } from 'lucide-react';
 import Link from "next/link"
 
-const Home = () => {
+const Home = () => {  
   return (
     <div className="flex justify-center p-4">
       <Card className="w-[90%] md:w-[80%] lg:w-[70%]">

@@ -49,6 +49,27 @@ export const getDataByIdFromLocalStorage = (key: string, id: number) => {
   } 
 }
 
+export const updateDataById = (key: string, data: any) => {
+  const currentData = getDataFromLocalStorage(key);
+  const checkData = getDataByIdFromLocalStorage(key, data.id);
+
+  if (checkData.status === 'error') return checkData;
+
+  const updatedData = currentData.map((item: any) => {
+    if(item.id === data.id) {
+      return { ...data }
+    }
+    return item;
+  });
+  setDataToLocalStorage(key, updatedData);
+
+  return {
+    status: 'success',
+    message: 'Data berhasil diubah!',
+    data: updatedData,
+  } 
+}
+
 export const deleteDataById = (key: string, id: number) => {
   const currentData = getDataFromLocalStorage(key);
   const checkData = getDataByIdFromLocalStorage(key, id);

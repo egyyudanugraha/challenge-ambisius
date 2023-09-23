@@ -3,11 +3,12 @@
 import { useState, useEffect } from 'react';
 import { Menu } from "@/types"
 import { DataTable } from "../data-table"
-import { addDataToLocaleStorage, deleteDataById, getDataFromLocalStorage } from '@/lib/utils';
+import { addDataToLocaleStorage, deleteDataById, getDataFromLocalStorage, updateDataById } from '@/lib/utils';
 import AddMenu from '../AddMenu';
 import { ColumnDef } from '@tanstack/react-table';
 import CustomHeader from '../CustomHeader';
 import DeleteButton from '../DeleteButton';
+import EditButton from '../EditButton';
 
 const MenuSection = () => {
   const [init, setInit] = useState(true);
@@ -15,6 +16,12 @@ const MenuSection = () => {
 
   const handleAddMenu = (menu: Menu) => {
    const { data } = addDataToLocaleStorage('menus', menu);
+
+    setMenus(data)
+  }
+
+  const handleUpdateMenu = (menu: Menu) => {
+   const { data } = updateDataById('menus', menu);
 
     setMenus(data)
   }
@@ -45,7 +52,12 @@ const MenuSection = () => {
     {
       id: 'actions',
       header: 'Aksi',
-      cell: ({ row }) => <DeleteButton data={row.original} handleDelete={handleDeleteMenu} />
+      cell: ({ row }) => (
+        <div className='flex gap-2'>
+          <EditButton data={row.original} handleAction={handleUpdateMenu} />
+          <DeleteButton data={row.original} handleDelete={handleDeleteMenu} />
+        </div>
+      )
     },
   ];
 
@@ -57,7 +69,7 @@ const MenuSection = () => {
 
     window.addEventListener('storage', refreshMenus)
 
-    return () => window.removeEventListener('storage', refreshMenus);
+    return () => window.removeEventListener('storage', refreshMenus)
   }, [])
 
   return (
