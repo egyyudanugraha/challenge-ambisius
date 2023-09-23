@@ -25,6 +25,7 @@ export const addDataToLocaleStorage = (key: string, data: any) => {
 
   return {
     status: 'success',
+    title: 'Sukses!',
     message: `Data ${key} berhasil disimpan!`,
     data: updateData
   }
@@ -38,12 +39,14 @@ export const getDataByIdFromLocalStorage = (key: string, id: number) => {
   if (!result) {
     return {
       status: 'error',
+      title: 'Opps!',
       message: 'Data tidak ditemukan!',
     }
   }
 
   return {
     status: 'success',
+    title: 'Sukses!',
     message: 'Data ditemukan!',
     data: result,
   } 
@@ -65,6 +68,7 @@ export const updateDataById = (key: string, data: any) => {
 
   return {
     status: 'success',
+    title: 'Sukses!',
     message: 'Data berhasil diubah!',
     data: updatedData,
   } 
@@ -81,6 +85,7 @@ export const deleteDataById = (key: string, id: number) => {
 
   return {
     status: 'success',
+    title: 'Sukses!',
     message: 'Data berhasil dihapus!',
     data: filteredData,
   } 
@@ -103,4 +108,10 @@ export const resetLocaleStorage = () => {
   setDataToLocalStorage('orders', []);
   setDataToLocalStorage('menus', defaultData);
   window.dispatchEvent(new Event('storage'));
+
+  return {
+    status: 'success',
+    title: 'Sukses!',
+    message: 'Data berhasil direset!',
+  } 
 }

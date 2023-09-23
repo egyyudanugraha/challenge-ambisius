@@ -9,27 +9,56 @@ import { ColumnDef } from '@tanstack/react-table';
 import CustomHeader from '../CustomHeader';
 import DeleteButton from '../DeleteButton';
 import EditButton from '../EditButton';
+import { useToast } from '@/components/ui/use-toast';
 
 const MenuSection = () => {
+  const { toast } = useToast()
   const [init, setInit] = useState(true);
   const [menus, setMenus] = useState<Menu[]>([]);
 
   const handleAddMenu = (menu: Menu) => {
-   const { data } = addDataToLocaleStorage('menus', menu);
+   const { title, message, data } = addDataToLocaleStorage('menus', menu);
+    toast({
+      title,
+      description: message,
+    })
 
     setMenus(data)
   }
 
   const handleUpdateMenu = (menu: Menu) => {
-   const { data } = updateDataById('menus', menu);
+   const { status, title, message, data } = updateDataById('menus', menu);
 
-    setMenus(data)
+    const updateMenuToast = toast({
+      title: 'Menyimpan',
+      description: 'Memperbarui daftar menu...',
+    })
+    
+    if (status === 'success') setMenus(data);
+    updateMenuToast.update({
+      id: updateMenuToast.id,
+      title,
+      description: message,
+      variant: status === 'error' ? 'destructive' : 'default',
+    })
+    
   }
 
   const handleDeleteMenu = (id: number) => {
-    const { data } = deleteDataById('menus', id);
+    const { status, title, message, data } = deleteDataById('menus', id);
 
-    setMenus(data);
+    const deleteMenuToast = toast({
+      title: 'Menyimpan',
+      description: 'Memperbarui daftar menu...',
+    })
+
+    if (status === 'success') setMenus(data);
+    deleteMenuToast.update({
+      id: deleteMenuToast.id,
+      title,
+      description: message,
+      variant: status === 'error' ? 'destructive' : 'default',
+    })
   }
 
   const columns: ColumnDef<Menu>[] = [
