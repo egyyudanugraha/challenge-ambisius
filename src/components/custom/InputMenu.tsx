@@ -44,6 +44,8 @@ const InputMenu = ({ data }: { data?: Menu }) => {
         price: Number(price?.split('.').join(''))
       })
     }
+    form.setValue('name', '')
+    form.setValue('price', '')
   }
 
   return (
