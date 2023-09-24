@@ -33,10 +33,14 @@ export interface OrderContext {
   resetOrder: () => void;
 }
 
+export interface InputOrderProps { 
+  handleAddOrder: (order: Order) => void
+}
+
 export interface SelectTableProps { 
   count: number;
   selected: number;
-  handleSelect: Dispatch<SetStateAction<number>>;
+  handleSelect: (action: 'tableId' | 'menuId' | 'qty', num: number) => void;
 }
 
 export interface DeleteButtonProps {
@@ -45,5 +49,6 @@ export interface DeleteButtonProps {
 }
 
 export interface ComboBoxProps { 
-  handleSelect: Dispatch<SetStateAction<number>>;
+  selected: number;
+  handleSelect: (action: 'tableId' | 'menuId' | 'qty', num: number) => void;
 }

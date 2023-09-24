@@ -8,7 +8,7 @@ const SelectTable = ({ count, selected, handleSelect }: SelectTableProps) => {
         <Card 
           key={num} 
           className={`w-full max-w-[80px] sm:max-w-[120px] cursor-pointer hover:bg-slate-200 ${selected === num && 'bg-slate-900 hover:bg-current'}`} 
-          onClick={() => handleSelect((prevSelect) => prevSelect === num ? 0 : num)}
+          onClick={() => handleSelect("tableId", selected === num ? 0 : num)}
         >
           <CardHeader className="items-center">
             <CardTitle className={`${selected === num && 'text-white'}`}>{num}</CardTitle>

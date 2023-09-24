@@ -4,12 +4,15 @@ import { Button } from "../ui/button"
 import { RefreshCw } from 'lucide-react';
 import { useToast } from "../ui/use-toast";
 import { useMenu } from "@/contexts/MenuContext";
+import { useOrder } from "@/contexts/OrderContext";
 
 const ResetButton = () => {
   const { toast } = useToast()
   const { resetMenu } = useMenu()
+  const { resetOrder } = useOrder()
 
   const handleReset = () => {
+    resetOrder();
     resetMenu();
     toast({
       title: 'Berhasil!',

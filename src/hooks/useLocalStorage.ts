@@ -9,12 +9,12 @@ const useLocalStorage = <T>(key: string, initialState: T[]): [T[], React.Dispatc
     const dataFromStorage = getDataFromLocalStorage(key)    
     if (dataFromStorage) setStorage(dataFromStorage);
     setInit(false)
-  }, []);
+  }, [key]);
 
   useEffect(() => {
     if (!init) setDataToLocalStorage(key, storage);
     
-  }, [storage]);
+  }, [storage, key, init]);
 
   return [storage, setStorage];
 }

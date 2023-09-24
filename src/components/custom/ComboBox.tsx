@@ -17,13 +17,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { ComboBoxProps, Menu } from "@/types"
+import { ComboBoxProps } from "@/types"
 import { useMenu } from "@/contexts/MenuContext"
 
-const ComboBox = ({ handleSelect }: ComboBoxProps) => {
+const ComboBox = ({ selected, handleSelect }: ComboBoxProps) => {
   const { menus } = useMenu()
   const [open, setOpen] = useState(false)
-  const [value, setValue] = useState("")
     
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -34,8 +33,8 @@ const ComboBox = ({ handleSelect }: ComboBoxProps) => {
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {value
-            ? menus.find((menu) => menu.name.toLowerCase() === value)?.name
+          {selected
+            ? menus.find((menu) => menu.id === selected)?.name
             : "Pilih menu..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -49,15 +48,14 @@ const ComboBox = ({ handleSelect }: ComboBoxProps) => {
               <CommandItem
                 key={menu.id}
                 onSelect={(currentValue) => {
-                  setValue(currentValue.toLowerCase() === value ? "" : currentValue)
-                  handleSelect(menu.id)
+                  handleSelect("menuId", menu.id)
                   setOpen(false)
                 }}
               >
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === menu.name.toLowerCase() ? "opacity-100" : "opacity-0"
+                    selected === menu.id ? "opacity-100" : "opacity-0"
                   )}
                 />
                 {menu.name}
