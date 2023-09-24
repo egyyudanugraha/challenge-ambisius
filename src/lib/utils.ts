@@ -1,4 +1,4 @@
-import { Menu } from "@/types";
+import { FormatTable, Menu, Order } from "@/types";
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
  
@@ -19,6 +19,25 @@ export const setDataToLocalStorage = (key: string, data: any) => {
 }
 
 export const generateId = () => Number(String(+new Date()).substring(4, 11))
+export const transformData = (accumulator: FormatTable[], currentOrder: Order) => {
+  const { id, tableId, menuId, qty } = currentOrder;
+  
+  const checkOrder = accumulator.find((table) => table.tableId === tableId);
+  const checkOrderMenu = checkOrder?.orders.find((order) => order.menuId === menuId);
+
+  if (checkOrderMenu) {
+    checkOrderMenu.qty += qty;
+  } else if (checkOrder) {
+    checkOrder.orders.push({ id, menuId, qty });
+  } else {
+    accumulator.push({
+      tableId,
+      orders: [{ id, menuId, qty }]
+    });
+  }
+  
+  return accumulator;
+}
 
 export const defaultMenu: Menu[] = [
   {

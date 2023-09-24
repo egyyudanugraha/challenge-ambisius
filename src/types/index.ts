@@ -28,7 +28,9 @@ export interface MenuContext {
 
 export interface OrderContext {
   orders: Order[];
+  getAllOrderTable: FormatTable[];
   addOrder: (order: Order[]) => void;
+  getOrderByTableId: (tableId: number) => void;
   resetOrder: () => void;
 }
 
@@ -50,4 +52,15 @@ export interface DeleteButtonProps {
 export interface ComboBoxProps { 
   selected: number;
   handleSelect: (action: 'tableId' | 'menuId' | 'qty', num: number) => void;
+}
+
+export interface OrderFormat {
+  id: number;
+  menuId: number;
+  qty: number;
+}
+
+export interface FormatTable {
+  tableId: number;
+  orders: OrderFormat[];
 }

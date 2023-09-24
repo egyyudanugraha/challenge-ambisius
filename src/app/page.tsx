@@ -7,6 +7,7 @@ import ResetButton from "@/components/custom/ResetButton";
 import MenuSection from "@/components/custom/section/MenuSection"
 import OrderSection from "@/components/custom/section/OrderSection";
 import Link from "next/link"
+import DapurSection from "@/components/custom/section/DapurSection";
 
 const Home = () => {  
   return (
@@ -61,7 +62,9 @@ const Home = () => {
             <TabsContent value="order">
               <OrderSection />
             </TabsContent>
-            <TabsContent value="dapur">Dapur</TabsContent>
+            <TabsContent value="dapur">
+              <DapurSection />
+            </TabsContent>
             <TabsContent value="kasir">Kasir</TabsContent>
           </Tabs>
         </CardContent>

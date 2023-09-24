@@ -2,11 +2,14 @@
 
 import { createContext, useContext } from 'react';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import { Order, OrderContext } from '@/types';
+import { FormatTable, Order, OrderContext } from '@/types';
+import { transformData } from '@/lib/utils';
 
 const OrderContext = createContext<OrderContext>({
   orders: [],
+  getAllOrderTable: [],
   addOrder: () => {},
+  getOrderByTableId: () => {},
   resetOrder: () => {},
 });
 
@@ -22,14 +25,18 @@ const OrderProvider = ({ children }: {
 }) => {
   const [orders, setOrders] = useLocalStorage<Order>('orders', []);
 
-  const addOrder = (order: Order[]) => setOrders([...orders, ...order])
+  const getAllOrderTable = orders.reduce(transformData, []);
+  const addOrder = (order: Order[]) => setOrders([...orders, ...order].sort((a, b) => a.tableId - b.tableId))
+  const getOrderByTableId = (tableId: number) => orders.filter((order) => order.tableId === tableId)
   const resetOrder = () => setOrders([])
 
   return (
     <OrderContext.Provider
       value={{
         orders,
+        getAllOrderTable,
         addOrder,
+        getOrderByTableId,
         resetOrder,
       }} 
     >{children}</OrderContext.Provider>
