@@ -11,7 +11,7 @@ import Link from "next/link"
 const Home = () => {  
   return (
     <div className="flex justify-center p-4">
-      <Card className="w-[90%] md:w-[80%] lg:w-[70%]">
+      <Card className="w-[95%] md:w-[80%] lg:w-[70%]">
         <CardHeader>
           <div className="flex flex-col md:flex-row justify-between md:items-center">
             <div>
