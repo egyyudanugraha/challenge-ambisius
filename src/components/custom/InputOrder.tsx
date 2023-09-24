@@ -1,4 +1,3 @@
-import ComboBox from './ComboBox'
 import { Input } from '../ui/input'
 import { InputOrderProps } from '@/types'
 import { generateId } from '@/lib/utils'
@@ -13,6 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import SelectTable from './SelectTable'
+import ComboBox from './ComboBox'
 import * as z from "zod"
 
 const InputOrder = ({ handleAddOrder }: InputOrderProps) => {

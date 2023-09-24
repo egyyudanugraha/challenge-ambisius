@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -42,7 +40,7 @@ const ComboBox = ({ selected, handleSelect }: ComboBoxProps) => {
         <Command className="w-full">
           <CommandInput placeholder="Cari menu..." />
           <CommandEmpty>Menu tidak ditemukan.</CommandEmpty>
-          <CommandGroup className="w-full">
+          <CommandGroup className="w-full max-h-60 overflow-y-auto sm-scrollbar">
             {menus.map((menu) => (
               <CommandItem
                 key={menu.id}

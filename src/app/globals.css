@@ -75,8 +75,18 @@
   }
   
   .no-scrollbar::-webkit-scrollbar {
-    display: none;
+    @apply hidden
   }
+
+  .sm-scrollbar::-webkit-scrollbar {
+    @apply w-2 bg-slate-50
+  }
+    
+  /* Handle */
+  .sm-scrollbar::-webkit-scrollbar-thumb {
+      @apply bg-slate-300 rounded-md
+  }
+
   .no-scrollbar {
     -ms-overflow-style: none; 
     scrollbar-width: none;

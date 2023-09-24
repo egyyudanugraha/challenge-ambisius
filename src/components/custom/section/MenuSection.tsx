@@ -52,7 +52,7 @@ const MenuSection = () => {
       <span className="font-semibold text-sm">Tambahkan menu</span>
       <InputMenu  />
       <span className="font-semibold text-sm">Daftar menu</span>
-      <DataTable columns={columns} data={menus} />
+      <DataTable columns={columns} data={menus} init={init} />
     </div>
   )
 }
