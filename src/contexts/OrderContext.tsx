@@ -3,7 +3,6 @@
 import { createContext, useContext } from 'react';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { Order, OrderContext } from '@/types';
-import { defaultMenu } from '@/lib/utils';
 
 const OrderContext = createContext<OrderContext>({
   orders: [],
@@ -23,7 +22,7 @@ const OrderProvider = ({ children }: {
 }) => {
   const [orders, setOrders] = useLocalStorage<Order>('orders', []);
 
-  const addOrder = (order: Order) => setOrders([...orders, order])
+  const addOrder = (order: Order[]) => setOrders([...orders, ...order])
   const resetOrder = () => setOrders([])
 
   return (

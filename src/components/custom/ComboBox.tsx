@@ -17,19 +17,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { Menu } from "@/types"
+import { ComboBoxProps, Menu } from "@/types"
+import { useMenu } from "@/contexts/MenuContext"
 
-const ComboBox = () => {
+const ComboBox = ({ handleSelect }: ComboBoxProps) => {
+  const { menus } = useMenu()
   const [open, setOpen] = useState(false)
-  const [menus, setMenus] = useState<Menu[]>([])
   const [value, setValue] = useState("")
-
-  useEffect(() => {
-    const getMenus = getDataFromLocalStorage('menus');
-    setMenus(getMenus);
-  }, [])
-  
-
+    
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -37,7 +32,7 @@ const ComboBox = () => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-full justify-between"
         >
           {value
             ? menus.find((menu) => menu.name.toLowerCase() === value)?.name
@@ -45,16 +40,17 @@ const ComboBox = () => {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
-        <Command>
+      <PopoverContent className="w-full p-0">
+        <Command className="w-full">
           <CommandInput placeholder="Cari menu..." />
           <CommandEmpty>Menu tidak ditemukan.</CommandEmpty>
-          <CommandGroup>
+          <CommandGroup className="w-full">
             {menus.map((menu) => (
               <CommandItem
                 key={menu.id}
                 onSelect={(currentValue) => {
                   setValue(currentValue.toLowerCase() === value ? "" : currentValue)
+                  handleSelect(menu.id)
                   setOpen(false)
                 }}
               >

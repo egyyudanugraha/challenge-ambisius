@@ -12,7 +12,7 @@ import { useMenu } from '@/contexts/MenuContext';
 
 const MenuSection = () => {
   const [init, setInit] = useState(true);
-  const { menus } = useMenu();
+  const { menus, deleteMenu } = useMenu();
 
   useEffect(() => {
     setInit(false)
@@ -41,7 +41,7 @@ const MenuSection = () => {
       cell: ({ row }) => (
         <div className='flex gap-2'>
           <EditButton data={row.original} />
-          <DeleteButton data={row.original} />
+          <DeleteButton data={row.original} handleDelete={deleteMenu} />
         </div>
       )
     },

@@ -10,17 +10,15 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Trash2 } from 'lucide-react';
-import { Menu } from "@/types"
+import { DeleteButtonProps } from "@/types"
 import { Button } from "../ui/button";
-import { useMenu } from "@/contexts/MenuContext";
 import { useToast } from "../ui/use-toast";
 
-const DeleteButton = ({ data }: { data: Menu }) => {
+const DeleteButton = ({ data, handleDelete }: DeleteButtonProps) => {
   const { toast } = useToast()
-  const { deleteMenu } = useMenu()
 
-  const handleDelete = () => {
-    deleteMenu(data.id);
+  const handleAction = () => {
+    handleDelete(data.id);
     toast({
       title: 'Berhasil!',
       description: 'Data berhasil dihapus!',
@@ -38,16 +36,14 @@ const DeleteButton = ({ data }: { data: Menu }) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Apakah anda yakin?</AlertDialogTitle>
           <AlertDialogDescription>
-            Apakah anda yakin akan menghapus menu 
-            <span className="font-semibold">{` ${data.name} `}</span>
-            dengan ID 
+            Apakah anda yakin akan menghapus data dengan ID 
             <span className="font-semibold">{` ${data.id}`}</span>?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Batal</AlertDialogCancel>
           <Button variant='destructive' asChild>
-            <AlertDialogAction onClick={handleDelete}>Ya, Hapus!</AlertDialogAction>
+            <AlertDialogAction onClick={handleAction}>Ya, Hapus!</AlertDialogAction>
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import { Column } from "@tanstack/react-table";
 
 export interface Menu {
@@ -28,6 +29,21 @@ export interface MenuContext {
 
 export interface OrderContext {
   orders: Order[];
-  addOrder: (order: Order) => void;
+  addOrder: (order: Order[]) => void;
   resetOrder: () => void;
+}
+
+export interface SelectTableProps { 
+  count: number;
+  selected: number;
+  handleSelect: Dispatch<SetStateAction<number>>;
+}
+
+export interface DeleteButtonProps {
+  data: Menu | Order;
+  handleDelete: (id: number) => void;
+}
+
+export interface ComboBoxProps { 
+  handleSelect: Dispatch<SetStateAction<number>>;
 }
