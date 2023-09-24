@@ -1,14 +1,14 @@
+import { ColumnDef } from '@tanstack/react-table';
+import { Order } from '@/types';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Order } from '@/types';
 import { useMenu } from '@/contexts/MenuContext';
-import DeleteButton from '../DeleteButton';
 import { useOrder } from '@/contexts/OrderContext';
-import InputOrder from '../InputOrder';
 import { useToast } from '@/components/ui/use-toast';
 import CustomHeader from '../CustomHeader';
-import { ColumnDef } from '@tanstack/react-table';
-import { DataTable } from '../data-table';
+import DataTable from '../DataTable';
+import InputOrder from '../InputOrder';
+import DeleteButton from '../DeleteButton';
 
 const OrderSection = () => {
   const { toast } = useToast()

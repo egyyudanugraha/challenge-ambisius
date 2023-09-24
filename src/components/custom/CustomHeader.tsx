@@ -2,7 +2,7 @@ import { HeaderColumnProps } from "@/types"
 import { Button } from "../ui/button"
 import { ArrowUp, ArrowDown} from "lucide-react"
 
-const CustomHeader = ({ title, column }: HeaderColumnProps) => {
+const CustomHeader = <TData extends object>({ title, column }: HeaderColumnProps<TData>) => {
   return (
     <Button
       variant="ghost"

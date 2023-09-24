@@ -1,9 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
-
-import { cn, getDataFromLocalStorage } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -47,7 +46,7 @@ const ComboBox = ({ selected, handleSelect }: ComboBoxProps) => {
             {menus.map((menu) => (
               <CommandItem
                 key={menu.id}
-                onSelect={(currentValue) => {
+                onSelect={() => {
                   handleSelect("menuId", menu.id)
                   setOpen(false)
                 }}

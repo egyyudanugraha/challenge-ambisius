@@ -1,14 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { Menu } from "@/types"
-import { DataTable } from "../data-table"
-import InputMenu from '../InputMenu';
 import { ColumnDef } from '@tanstack/react-table';
+import { useState, useEffect } from 'react';
+import { useMenu } from '@/contexts/MenuContext';
+import DataTable from "../DataTable"
+import InputMenu from '../InputMenu';
 import CustomHeader from '../CustomHeader';
 import DeleteButton from '../DeleteButton';
 import EditButton from '../EditButton';
-import { useMenu } from '@/contexts/MenuContext';
 
 const MenuSection = () => {
   const [init, setInit] = useState(true);

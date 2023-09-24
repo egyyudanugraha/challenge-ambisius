@@ -26,7 +26,7 @@ interface DataTableProps<TData, TValue> {
   init?: boolean,
 }
 
-export function DataTable<TData, TValue>({
+export default function DataTable<TData, TValue>({
   columns,
   data,
   init

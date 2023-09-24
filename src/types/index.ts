@@ -1,5 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
-import { Column } from "@tanstack/react-table";
+import { Column } from '@tanstack/react-table';
 
 export interface Menu {
   id: number;
@@ -14,9 +13,9 @@ export interface Order {
   qty: number;
 }
 
-export interface HeaderColumnProps<T> {
+export interface HeaderColumnProps<TData> {
   title: string;
-  column: Column<Menu | Order, T>;
+  column: Column<TData, unknown>
 }
 
 export interface MenuContext {

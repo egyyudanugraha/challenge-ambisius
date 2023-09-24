@@ -1,11 +1,8 @@
-import { useState } from 'react'
-import SelectTable from './SelectTable'
 import ComboBox from './ComboBox'
 import { Input } from '../ui/input'
 import { InputOrderProps } from '@/types'
 import { generateId } from '@/lib/utils'
 import { Button } from '../ui/button'
-import * as z from "zod"
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -15,6 +12,8 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form"
+import SelectTable from './SelectTable'
+import * as z from "zod"
 
 const InputOrder = ({ handleAddOrder }: InputOrderProps) => {
   const FormSchema = z.object({
