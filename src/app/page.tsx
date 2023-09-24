@@ -46,7 +46,7 @@ const Home = () => {
           <Tabs defaultValue="menu" className="w-full">
             <div className="flex flex-col md:flex-row gap-2 w-full">
               <TabsList className="w-full">
-                <div className="flex gap-2 w-full overflow-y-auto">
+                <div className="flex gap-2 w-full overflow-y-scroll no-scrollbar">
                   <TabsTrigger value="menu" className="w-full">Menu</TabsTrigger>
                   <TabsTrigger value="order" className="w-full">Order</TabsTrigger>
                   <TabsTrigger value="dapur" className="w-full">Dapur</TabsTrigger>

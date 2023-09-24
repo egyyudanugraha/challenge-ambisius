@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Menu } from "@/types"
 import { DataTable } from "../data-table"
-import AddMenu from '../AddMenu';
+import InputMenu from '../InputMenu';
 import { ColumnDef } from '@tanstack/react-table';
 import CustomHeader from '../CustomHeader';
 import DeleteButton from '../DeleteButton';
@@ -49,7 +49,8 @@ const MenuSection = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <AddMenu  />
+      <span className="font-semibold text-sm">Tambahkan menu</span>
+      <InputMenu  />
       <span className="font-semibold text-sm">Daftar menu</span>
       <DataTable columns={columns} data={menus} init={init} />
     </div>

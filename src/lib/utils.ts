@@ -18,14 +18,16 @@ export const setDataToLocalStorage = (key: string, data: any) => {
   localStorage.setItem(key, convertToString);
 }
 
+export const generateId = () => Number(String(+new Date()).substring(4, 11))
+
 export const defaultMenu: Menu[] = [
   {
-    id: 112233,
+    id: 5319436,
     name: 'Ayam Kecap Manis',
     price: 12000,
   },
   {
-    id: 123456,
+    id: 5319437,
     name: 'Nasi Goreng Spesial',
     price: 20000,
   }
