@@ -23,7 +23,7 @@ const InputOrder = ({ handleAddOrder }: InputOrderProps) => {
     }).min(1, 'Harap pilih salah satu meja!'),
     menuId: z.number({
       required_error: "Harap pilih menu",
-    }),
+    }).min(1, 'Harap pilih salah satu menu!'),
     qty: z.number({
       required_error: "Harap masukan kuantitas",
     }).min(1, 'Kuantitas minimal 1'),
@@ -32,6 +32,7 @@ const InputOrder = ({ handleAddOrder }: InputOrderProps) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+
       qty: 0,
     }
   })
