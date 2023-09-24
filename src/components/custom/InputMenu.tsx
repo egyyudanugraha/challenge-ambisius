@@ -21,7 +21,6 @@ const formSchema = z.object({
 
 const InputMenu = ({ data }: { data?: Menu }) => {
   const { toast } = useToast()
-  const [price, setPrice] = useState(data?.price.toLocaleString('id-ID') ?? '')
   const { addMenu, updateMenu } = useMenu();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -42,7 +41,7 @@ const InputMenu = ({ data }: { data?: Menu }) => {
       updateMenu(data.id, {
         ...data,
         ...values,
-        price: Number(price?.split('.').join(''))
+        price: Number(values.price?.split('.').join(''))
       })
 
       toastAction.update({
@@ -54,7 +53,7 @@ const InputMenu = ({ data }: { data?: Menu }) => {
       addMenu({
         ...values,
         id: generateId(),
-        price: Number(price?.split('.').join(''))
+        price: Number(values.price?.split('.').join(''))
       })
 
       toastAction.update({
@@ -64,7 +63,7 @@ const InputMenu = ({ data }: { data?: Menu }) => {
       })
     }
     form.setValue('name', '')
-    setPrice('')
+    form.setValue('price', '')
   }
 
   return (
@@ -93,12 +92,12 @@ const InputMenu = ({ data }: { data?: Menu }) => {
                   placeholder="Harga menu"
                   inputMode="numeric"
                   autoComplete="off"
-                  value={price === '0' ? '' : price}
+                  value={field.value === '0' ? '' : field.value}
                   onChange={(e) => {
                     const parsedNumber = Number(e.target.value.split('.').join(''));
                     if (Number.isNaN(parsedNumber)) return;
                     
-                    setPrice(parsedNumber.toLocaleString('id-ID'))
+                    form.setValue('price', parsedNumber.toLocaleString('id-ID'))
                   }}
                 />
               </FormControl>
