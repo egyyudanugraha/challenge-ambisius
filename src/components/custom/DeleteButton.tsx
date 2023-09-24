@@ -13,9 +13,20 @@ import { Trash2 } from 'lucide-react';
 import { Menu } from "@/types"
 import { Button } from "../ui/button";
 import { useMenu } from "@/contexts/MenuContext";
+import { useToast } from "../ui/use-toast";
 
 const DeleteButton = ({ data }: { data: Menu }) => {
+  const { toast } = useToast()
   const { deleteMenu } = useMenu()
+
+  const handleDelete = () => {
+    deleteMenu(data.id);
+    toast({
+      title: 'Berhasil!',
+      description: 'Data berhasil dihapus!',
+    })
+  }
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -36,7 +47,7 @@ const DeleteButton = ({ data }: { data: Menu }) => {
         <AlertDialogFooter>
           <AlertDialogCancel>Batal</AlertDialogCancel>
           <Button variant='destructive' asChild>
-            <AlertDialogAction onClick={() => deleteMenu(data.id)}>Ya, Hapus!</AlertDialogAction>
+            <AlertDialogAction onClick={handleDelete}>Ya, Hapus!</AlertDialogAction>
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

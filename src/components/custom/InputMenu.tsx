@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
 import * as z from "zod"
 import { generateId } from '@/lib/utils';
+import { useToast } from '../ui/use-toast';
  
 const formSchema = z.object({
   name: z.string({
@@ -19,6 +20,7 @@ const formSchema = z.object({
 })
 
 const InputMenu = ({ data }: { data?: Menu }) => {
+  const { toast } = useToast()
   const [price, setPrice] = useState(data?.price.toLocaleString('id-ID') ?? '')
   const { addMenu, updateMenu } = useMenu();
 
@@ -31,17 +33,34 @@ const InputMenu = ({ data }: { data?: Menu }) => {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    const toastAction = toast({
+      title: 'Memproses...',
+      description: 'Data sedang diproses'
+    });
+
     if (data) {
       updateMenu(data.id, {
         ...data,
         ...values,
         price: Number(price?.split('.').join(''))
       })
+
+      toastAction.update({
+        id: toastAction.id,
+        title: 'Berhasil!',
+        description: 'Data menu berhasil diubah'
+      })
     } else {
       addMenu({
         ...values,
         id: generateId(),
         price: Number(price?.split('.').join(''))
+      })
+
+      toastAction.update({
+        id: toastAction.id,
+        title: 'Berhasil!',
+        description: 'Data menu berhasil disimpan'
       })
     }
     form.setValue('name', '')

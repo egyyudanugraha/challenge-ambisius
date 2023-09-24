@@ -12,7 +12,7 @@ const ResetButton = () => {
   const handleReset = () => {
     resetMenu();
     toast({
-      title: 'Sukses!',
+      title: 'Berhasil!',
       description: 'Data berhasil direset!',
     })
   }
