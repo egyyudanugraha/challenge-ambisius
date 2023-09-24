@@ -6,6 +6,13 @@ export interface Menu {
   price: number;
 }
 
+export interface Order {
+  id: number;
+  tableId: number;
+  menuId: number
+  qty: number;
+}
+
 export interface HeaderColumnProps {
   title: string;
   column: Column<Menu, unknown>;
@@ -17,4 +24,10 @@ export interface MenuContext {
   updateMenu: (id: number, updateMenu: Menu) => void;
   deleteMenu: (id: number) => void;
   resetMenu: () => void;
+}
+
+export interface OrderContext {
+  orders: Order[];
+  addOrder: (order: Order) => void;
+  resetOrder: () => void;
 }
