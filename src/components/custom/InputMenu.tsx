@@ -64,7 +64,7 @@ const InputMenu = ({ data }: { data?: Menu }) => {
       })
     }
     form.setValue('name', '')
-    form.setValue('price', '')
+    setPrice('')
   }
 
   return (
