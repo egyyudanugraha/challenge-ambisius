@@ -12,16 +12,18 @@ import { Pencil } from 'lucide-react'
 import { Button } from "../ui/button"
 import { Label } from "../ui/label"
 import { Input } from "../ui/input"
-import { EditButtonProps } from '@/types';
+import { Menu } from '@/types';
+import { useMenu } from '@/contexts/MenuContext';
 
 
-const EditButton = ({ data, handleAction }: EditButtonProps) => {
+const EditButton = ({ data }: { data: Menu }) => {
   const [name, setName] = useState(data.name)
-  const [price, setPrice] = useState(data.price.toLocaleString('id-ID'))
+  const [price, setPrice] = useState(data.price.toLocaleString('id-ID'));
+  const { updateMenu } = useMenu()
 
   const handleUpdate = () => {
-    handleAction({
-      id: data.id,
+    updateMenu(data.id, {
+      ...data,
       name,
       price: Number(price?.split('.').join(''))
     })

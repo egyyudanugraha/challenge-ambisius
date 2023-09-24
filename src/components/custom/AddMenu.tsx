@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import { Input } from '../ui/input';
-import { AddMenuProps } from '@/types';
 import { Button } from '../ui/button';
+import { useMenu } from '@/contexts/MenuContext';
 
-const AddMenu = ({ handleAddMenu }: AddMenuProps) => {
+const AddMenu = () => {
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')
+  const { addMenu } = useMenu();
 
   const handleAction = () => {
-    handleAddMenu({
+    addMenu({
       id: +new Date(),
       name,
       price: Number(price?.split('.').join(''))

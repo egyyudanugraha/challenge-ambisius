@@ -10,10 +10,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Trash2 } from 'lucide-react';
-import { DeleteButtonProps } from "@/types"
+import { Menu } from "@/types"
 import { Button } from "../ui/button";
+import { useMenu } from "@/contexts/MenuContext";
 
-const DeleteButton = ({ data, handleDelete }: DeleteButtonProps) => {
+const DeleteButton = ({ data }: { data: Menu }) => {
+  const { deleteMenu } = useMenu()
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -34,7 +36,7 @@ const DeleteButton = ({ data, handleDelete }: DeleteButtonProps) => {
         <AlertDialogFooter>
           <AlertDialogCancel>Batal</AlertDialogCancel>
           <Button variant='destructive' asChild>
-            <AlertDialogAction onClick={() => handleDelete(data.id)}>Ya, Hapus!</AlertDialogAction>
+            <AlertDialogAction onClick={() => deleteMenu(data.id)}>Ya, Hapus!</AlertDialogAction>
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -2,6 +2,7 @@
 
 import ResetButton from "@/components/custom/ResetButton";
 import MenuSection from "@/components/custom/section/MenuSection"
+import OrderSection from "@/components/custom/section/OrderSection";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Github, Globe } from 'lucide-react';
@@ -57,7 +58,9 @@ const Home = () => {
             <TabsContent value="menu">
               <MenuSection />
             </TabsContent>
-            <TabsContent value="order">Order</TabsContent>
+            <TabsContent value="order">
+              <OrderSection />
+            </TabsContent>
             <TabsContent value="dapur">Dapur</TabsContent>
             <TabsContent value="kasir">Kasir</TabsContent>
           </Tabs>

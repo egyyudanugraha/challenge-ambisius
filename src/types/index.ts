@@ -11,16 +11,10 @@ export interface HeaderColumnProps {
   column: Column<Menu, unknown>;
 }
 
-export interface AddMenuProps {
-  handleAddMenu: (data: Menu) => void;
-}
-
-export interface EditButtonProps {
-  data: Menu;
-  handleAction: (data: Menu) => void;
-}
-
-export interface DeleteButtonProps {
-  data: Menu;
-  handleDelete: (id: number) => void;
+export interface MenuContext {
+  menus: Menu[];
+  addMenu: (menu: Menu) => void;
+  updateMenu: (id: number, updateMenu: Menu) => void;
+  deleteMenu: (id: number) => void;
+  resetMenu: () => void;
 }

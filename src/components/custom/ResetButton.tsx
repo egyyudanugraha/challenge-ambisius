@@ -1,18 +1,19 @@
 'use client';
 
-import { resetLocaleStorage } from "@/lib/utils";
 import { Button } from "../ui/button"
 import { RefreshCw } from 'lucide-react';
 import { useToast } from "../ui/use-toast";
+import { useMenu } from "@/contexts/MenuContext";
 
 const ResetButton = () => {
   const { toast } = useToast()
+  const { resetMenu } = useMenu()
 
   const handleReset = () => {
-    const { title, message } = resetLocaleStorage();
+    resetMenu();
     toast({
-      title,
-      description: message,
+      title: 'Sukses!',
+      description: 'Data berhasil direset!',
     })
   }
   return (
