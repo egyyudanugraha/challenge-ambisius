@@ -14,9 +14,9 @@ export interface Order {
   qty: number;
 }
 
-export interface HeaderColumnProps {
+export interface HeaderColumnProps<T> {
   title: string;
-  column: Column<Menu, unknown>;
+  column: Column<Menu | Order, T>;
 }
 
 export interface MenuContext {

@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Order } from '@/types';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useMenu } from '@/contexts/MenuContext';
 import DeleteButton from '../DeleteButton';
 import { useOrder } from '@/contexts/OrderContext';
 import InputOrder from '../InputOrder';
 import { useToast } from '@/components/ui/use-toast';
+import CustomHeader from '../CustomHeader';
+import { ColumnDef } from '@tanstack/react-table';
+import { DataTable } from '../data-table';
 
 const OrderSection = () => {
   const { toast } = useToast()
@@ -32,38 +34,62 @@ const OrderSection = () => {
     })
   }
 
+  const columns: ColumnDef<Order>[] = [
+    {
+      accessorKey: 'id',
+      header: 'ID Order'
+    },
+    {
+      accessorKey: 'tableId',
+      header: ({ column }) => <CustomHeader title='No Meja' column={column} />,
+    },
+    {
+      accessorKey: 'menuId',
+      header: ({ column }) => <CustomHeader title='Nama menu' column={column} />,
+      cell: ({ row }) => {
+        const menu = menus.find((menu) => menu.id === row.getValue('menuId'));
+        return menu?.name;
+      }
+    },
+    {
+      id: 'satuan',
+      header: ({ column }) => <CustomHeader title='Harga satuan' column={column} />,
+      cell: ({ row }) => {
+        const menu = menus.find((menu) => menu.id === row.getValue('menuId'));
+        return `Rp. ${menu?.price.toLocaleString('id-ID')},-`;
+      }
+    },
+    {
+      accessorKey: 'qty',
+      header: ({ column }) => <CustomHeader title='Qty' column={column} />
+    },
+    {
+      id: 'total',
+      header: ({ column }) => <CustomHeader title='Total' column={column} />,
+      cell: ({ row }) => {
+        const menu = menus.find((menu) => menu.id === row.getValue('menuId'));
+        if (!menu) return 'Gratis!'
+
+        return `Rp. ${(menu.price * row.original.qty).toLocaleString('id-ID')},-`
+      }
+    },
+    {
+      id: 'actions',
+      header: 'Aksi',
+      cell: ({ row }) => (
+        <div className='flex gap-2'>
+          <DeleteButton data={row.original} handleDelete={handleDeleteOrder} />
+        </div>
+      )
+    },
+  ];
+
   return (
     <div className="flex flex-col gap-2">
       <InputOrder handleAddOrder={handleAddOrder} />
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">ID Order</TableHead>
-            <TableHead className="w-[100px]">No Meja</TableHead>
-            <TableHead>Nama menu</TableHead>
-            <TableHead>Harga satuan</TableHead>
-            <TableHead className="text-right">Qty</TableHead>
-            <TableHead className="text-right">Total</TableHead>
-            <TableHead className="text-right">Aksi</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {orders.length > 0 && orders.map((order) => (
-            <TableRow key={order.id}>
-              <TableCell className="font-medium">{order.id}</TableCell>
-              <TableCell>{order.tableId}</TableCell>
-              <TableCell>{menus.find((menu) => menu.id === order.menuId)?.name}</TableCell>
-              <TableCell>{`Rp. ${menus.find((menu) => menu.id === order.menuId)?.price.toLocaleString('id-ID')},-`}</TableCell>
-              <TableCell className="text-right">{order.qty}</TableCell>
-              <TableCell className="text-right">{`Rp. ${((menus.find((menu) => menu.id === order.menuId)?.price || 0) * order.qty).toLocaleString('id-ID')},-`}</TableCell>
-              <TableCell className="text-right">
-                <DeleteButton data={order} handleDelete={handleDeleteOrder} />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <DataTable columns={columns} data={orders} />
       <Button disabled={!orders.length} onClick={handleCheckout}>Checkout!</Button>
+      <span className="text-xs">*Data akan masuk local storage setelah checkout!</span>
     </div>
   )
 }
