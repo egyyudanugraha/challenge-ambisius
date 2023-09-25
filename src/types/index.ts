@@ -33,6 +33,7 @@ export interface OrderContext {
   getAllOrderTable: FormatTable[];
   addOrder: (order: Order[]) => void;
   getOrderByTableId: (tableId: number) => FormatTable;
+  deleteOrderByTableId: (tableId: number) => void;
   resetOrder: () => void;
 }
 

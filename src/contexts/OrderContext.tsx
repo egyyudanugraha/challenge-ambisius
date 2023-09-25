@@ -2,7 +2,7 @@
 
 import { createContext, useContext } from 'react';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import { FormatTable, Order, OrderContext } from '@/types';
+import { Order, OrderContext } from '@/types';
 import { transformData } from '@/lib/utils';
 
 const OrderContext = createContext<OrderContext>({
@@ -14,6 +14,7 @@ const OrderContext = createContext<OrderContext>({
     name: '',
     orders: [],
   }),
+  deleteOrderByTableId: () => {},
   resetOrder: () => {},
 });
 
@@ -32,6 +33,7 @@ const OrderProvider = ({ children }: {
   const getAllOrderTable = orders.reduce(transformData, []);
   const addOrder = (order: Order[]) => setOrders([...orders, ...order].sort((a, b) => a.tableId - b.tableId))
   const getOrderByTableId = (tableId: number) => orders.filter((order) => order.tableId === tableId).reduce(transformData, [])[0]
+  const deleteOrderByTableId = (tableId: number) => setOrders(orders.filter((order) => order.tableId !== tableId))
   const resetOrder = () => setOrders([])
 
   return (
@@ -41,6 +43,7 @@ const OrderProvider = ({ children }: {
         getAllOrderTable,
         addOrder,
         getOrderByTableId,
+        deleteOrderByTableId,
         resetOrder,
       }} 
     >{children}</OrderContext.Provider>

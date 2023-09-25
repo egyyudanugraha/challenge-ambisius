@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { RefreshCw } from 'lucide-react';
+import { Trash, RefreshCw } from 'lucide-react';
 import { useOrder } from "@/contexts/OrderContext"
 import { Button } from '@/components/ui/button';
 import { FormatTable } from '@/types';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useMenu } from '@/contexts/MenuContext';
 import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import ComboBox from "../ComboBox"
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import * as z from "zod"
+import ComboBox from "../ComboBox"
 
 const formSchema = z.object({
   tableId: z.number({
@@ -19,7 +19,7 @@ const formSchema = z.object({
 
 const KasirSection = () => {
   const { findMenu } = useMenu()
-  const { getAllOrderTable, getOrderByTableId } = useOrder()
+  const { getAllOrderTable, getOrderByTableId, deleteOrderByTableId, resetOrder } = useOrder()
   const [print, setPrint] = useState<FormatTable>()
 
   const chekMenuPrice = (menuId: number) => findMenu(menuId)?.price || 0
@@ -33,13 +33,12 @@ const KasirSection = () => {
   }, 0)  
   const formatTotal = !totalOrder ? 'Gratis!' : `Rp. ${totalOrder.toLocaleString('id-ID')},-`
   
-  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       tableId: 0,
     }
-  })
+  })  
  
   function onSubmit(data: z.infer<typeof formSchema>) {
     const getTable = getOrderByTableId(data.tableId);
@@ -48,13 +47,14 @@ const KasirSection = () => {
 
   const handleReset = () => {
     setPrint(undefined)
+    deleteOrderByTableId(form.getValues('tableId'))
     form.setValue('tableId', 0);
   }
 
   return (
     <div className="flex flex-col gap-2">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-2">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col md:flex-row gap-2">
           <FormField
             control={form.control}
             name="tableId"
@@ -72,12 +72,17 @@ const KasirSection = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className='w-[20%]'>Print</Button>
-          {print && (
-            <Button variant="destructive" onClick={handleReset}>
-              <RefreshCw className="h-4 w-4"/>
+          <div className="flex gap-2 w-full flex-col sm:flex-row">
+            <Button type="submit" className='w-full md:w-[20%]' disabled={!form.watch('tableId')}>Print</Button>
+            <Button variant="destructive" className='flex gap-1 w-full sm:w-[20%]' onClick={handleReset} disabled={!form.watch('tableId')}>
+              <Trash className="h-4 w-4" />
+              <span className="sm:hidden">Hapus meja</span>
             </Button>
-          )}
+            <Button variant="destructive" className="flex gap-1 w-full sm:w-64" onClick={resetOrder} disabled={!getAllOrderTable.length}>
+              <RefreshCw className="h-4 w-4" />
+              <span>Hapus semua</span>
+            </Button>
+          </div>
         </form>
       </Form>
 
