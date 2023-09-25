@@ -30,7 +30,9 @@ const DeleteButton = ({ data, disabled, className, title, handleDelete }: Delete
       <AlertDialogTrigger asChild>
         <Button variant='destructive' className={`flex gap-1 h-8 ${className}`} disabled={disabled}>
           <Trash2 className="h-4 w-4" />
-          <span className="space-y-0">{title}</span>
+          {title && (
+            <span>{title}</span>
+          )}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="w-[90%]">
