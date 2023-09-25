@@ -14,7 +14,7 @@ import { DeleteButtonProps } from "@/types"
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
 
-const DeleteButton = ({ data, handleDelete }: DeleteButtonProps) => {
+const DeleteButton = ({ data, disabled, className, title, handleDelete }: DeleteButtonProps) => {
   const { toast } = useToast()
 
   const handleAction = () => {
@@ -28,16 +28,23 @@ const DeleteButton = ({ data, handleDelete }: DeleteButtonProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='destructive' className="h-8">
+        <Button variant='destructive' className={`flex gap-1 h-8 ${className}`} disabled={disabled}>
           <Trash2 className="h-4 w-4" />
+          <span className="space-y-0">{title}</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="w-[90%]">
         <AlertDialogHeader>
           <AlertDialogTitle>Apakah anda yakin?</AlertDialogTitle>
           <AlertDialogDescription>
-            Apakah anda yakin akan menghapus data dengan ID 
-            <span className="font-semibold">{` ${data.id}`}</span>?
+            Apakah anda yakin akan menghapus data 
+            {!!data.id && (
+              <>
+                <span> dengan ID</span> 
+                <span className="font-semibold">{` ${data.id}`}</span>
+              </>
+            )}
+            ?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

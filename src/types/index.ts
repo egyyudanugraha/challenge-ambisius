@@ -48,7 +48,10 @@ export interface SelectTableProps {
 }
 
 export interface DeleteButtonProps {
-  data: Menu | Order;
+  data: Menu | Order | { id: number };
+  disabled?: boolean;
+  className?: string;
+  title?: string;
   handleDelete: (id: number) => void;
 }
 

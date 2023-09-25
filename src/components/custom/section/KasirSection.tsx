@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Trash, RefreshCw } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { useOrder } from "@/contexts/OrderContext"
 import { Button } from '@/components/ui/button';
 import { FormatTable } from '@/types';
@@ -10,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import * as z from "zod"
 import ComboBox from "../ComboBox"
+import DeleteButton from '../DeleteButton';
 
 const formSchema = z.object({
   tableId: z.number({
@@ -45,11 +45,23 @@ const KasirSection = () => {
     setPrint(getTable)
   }
 
-  const handleReset = () => {
+  const handleRemoveTable = () => {
     setPrint(undefined)
     deleteOrderByTableId(form.getValues('tableId'))
-    form.setValue('tableId', 0);
+    form.setValue('tableId', 0)
   }
+
+  const handleRemoveAllTable = () => {
+    setPrint(undefined)
+    resetOrder()
+    form.setValue('tableId', 0)
+  }
+
+  useEffect(() => {
+    setPrint(undefined)
+    form.setValue('tableId', 0)
+  }, [getOrderByTableId, form])
+  
 
   return (
     <div className="flex flex-col gap-2">
@@ -72,16 +84,14 @@ const KasirSection = () => {
               </FormItem>
             )}
           />
-          <div className="flex gap-2 w-full flex-col sm:flex-row">
-            <Button type="submit" className='w-full md:w-[20%]' disabled={!form.watch('tableId')}>Print</Button>
-            <Button variant="destructive" className='flex gap-1 w-full sm:w-[20%]' onClick={handleReset} disabled={!form.watch('tableId')}>
-              <Trash className="h-4 w-4" />
-              <span className="sm:hidden">Hapus meja</span>
-            </Button>
-            <Button variant="destructive" className="flex gap-1 w-full sm:w-64" onClick={resetOrder} disabled={!getAllOrderTable.length}>
-              <RefreshCw className="h-4 w-4" />
-              <span>Hapus semua</span>
-            </Button>
+          <div className="flex gap-2 w-full flex-col md:flex-row">
+            <div className='flex gap-2 w-full md:w-[60%]'>
+              <Button type="submit" className='w-full' disabled={!form.watch('tableId')}>Print</Button>
+              <DeleteButton className="h-10" data={{ id: form.getValues('tableId')}} handleDelete={handleRemoveTable} disabled={!form.watch('tableId')} />
+            </div>
+            <div className="flex md:w-[40%]">
+              <DeleteButton title="Hapus semua" className="h-10 w-full" data={{ id: 0 }} handleDelete={handleRemoveAllTable} disabled={!getAllOrderTable.length} />
+            </div>
           </div>
         </form>
       </Form>
