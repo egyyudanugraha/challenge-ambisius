@@ -8,10 +8,10 @@ const CardTable = ({ data }: { data: FormatTable }) => {
   return (
     <Card className="w-full sm:w-[250px]">
       <CardHeader className="flex items-center">
-        <CardTitle>Meja {data.tableId}</CardTitle>
+        <CardTitle>{data.name}</CardTitle>
       </CardHeader>
       <CardContent>
-        { data.orders.map((order) => (
+        {data.orders.map((order) => (
           <div key={order.id} className="flex gap-2">
             <div>{order.qty}x</div>
             <div className="break-all">{menus.find((menu) => menu.id === order.menuId)?.name}</div>

@@ -14,29 +14,31 @@ import {
 import SelectTable from './SelectTable'
 import ComboBox from './ComboBox'
 import * as z from "zod"
+import { useMenu } from '@/contexts/MenuContext'
+
+const formSchema = z.object({
+  tableId: z.number({
+    required_error: "Harap pilih meja",
+  }).min(1, 'Harap pilih salah satu meja!'),
+  menuId: z.number({
+    required_error: "Harap pilih menu",
+  }).min(1, 'Harap pilih salah satu menu!'),
+  qty: z.number({
+    required_error: "Harap masukan kuantitas",
+  }).min(1, 'Kuantitas minimal 1'),
+})
 
 const InputOrder = ({ handleAddOrder }: InputOrderProps) => {
-  const FormSchema = z.object({
-    tableId: z.number({
-      required_error: "Harap pilih meja",
-    }).min(1, 'Harap pilih salah satu meja!'),
-    menuId: z.number({
-      required_error: "Harap pilih menu",
-    }).min(1, 'Harap pilih salah satu menu!'),
-    qty: z.number({
-      required_error: "Harap masukan kuantitas",
-    }).min(1, 'Kuantitas minimal 1'),
-  })
+  const { menus } = useMenu()
  
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
-
       qty: 0,
     }
   })
  
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  function onSubmit(data: z.infer<typeof formSchema>) {
     handleAddOrder({
       ...data,
       id: generateId(),
@@ -68,7 +70,12 @@ const InputOrder = ({ handleAddOrder }: InputOrderProps) => {
             render={() => (
               <FormItem className="w-full">
                 <FormControl>
-                  <ComboBox selected={form.getValues('menuId')} handleSelect={form.setValue} />
+                  <ComboBox 
+                    name="menu" 
+                    list={menus} 
+                    selected={form.getValues('menuId')} 
+                    handleSelect={(id: number) => form.setValue('menuId', id)}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

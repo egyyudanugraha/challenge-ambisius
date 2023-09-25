@@ -19,10 +19,16 @@ export const setDataToLocalStorage = (key: string, data: any) => {
 }
 
 export const generateId = () => Number(String(+new Date()).substring(4, 11))
+
+export const generateArray = (count: number, name: string) => Array.from({ length: count }, (_, index) => ({
+  id: index + 1,
+  name: `${name} ${index + 1}`
+}))
+
 export const transformData = (accumulator: FormatTable[], currentOrder: Order) => {
   const { id, tableId, menuId, qty } = currentOrder;
   
-  const checkOrder = accumulator.find((table) => table.tableId === tableId);
+  const checkOrder = accumulator.find((table) => table.id === tableId);
   const checkOrderMenu = checkOrder?.orders.find((order) => order.menuId === menuId);
 
   if (checkOrderMenu) {
@@ -31,7 +37,8 @@ export const transformData = (accumulator: FormatTable[], currentOrder: Order) =
     checkOrder.orders.push({ id, menuId, qty });
   } else {
     accumulator.push({
-      tableId,
+      id: tableId,
+      name: `Meja ${tableId}`,
       orders: [{ id, menuId, qty }]
     });
   }

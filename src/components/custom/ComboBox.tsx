@@ -15,10 +15,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { ComboBoxProps } from "@/types"
-import { useMenu } from "@/contexts/MenuContext"
 
-const ComboBox = ({ selected, handleSelect }: ComboBoxProps) => {
-  const { menus } = useMenu()
+const ComboBox = ({ name, list, selected, handleSelect }: ComboBoxProps) => {
   const [open, setOpen] = useState(false)
     
   return (
@@ -30,32 +28,30 @@ const ComboBox = ({ selected, handleSelect }: ComboBoxProps) => {
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {selected
-            ? menus.find((menu) => menu.id === selected)?.name
-            : "Pilih menu..."}
+          {list.find((item) => item.id === selected)?.name ?? `Pilih ${name}...`}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command className="w-full">
-          <CommandInput placeholder="Cari menu..." />
-          <CommandEmpty>Menu tidak ditemukan.</CommandEmpty>
+          <CommandInput placeholder="Cari data..." />
+          <CommandEmpty>Data tidak ditemukan.</CommandEmpty>
           <CommandGroup className="w-full max-h-60 overflow-y-auto sm-scrollbar">
-            {menus.map((menu) => (
+            {list.map((item) => (
               <CommandItem
-                key={menu.id}
+                key={item.id}
                 onSelect={() => {
-                  handleSelect("menuId", menu.id)
+                  handleSelect(item.id)
                   setOpen(false)
                 }}
               >
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    selected === menu.id ? "opacity-100" : "opacity-0"
+                    selected === item.id ? "opacity-100" : "opacity-0"
                   )}
                 />
-                {menu.name}
+                {item.name}
               </CommandItem>
             ))}
           </CommandGroup>

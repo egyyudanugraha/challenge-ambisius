@@ -30,7 +30,7 @@ export interface OrderContext {
   orders: Order[];
   getAllOrderTable: FormatTable[];
   addOrder: (order: Order[]) => void;
-  getOrderByTableId: (tableId: number) => void;
+  getOrderByTableId: (tableId: number) => FormatTable;
   resetOrder: () => void;
 }
 
@@ -49,9 +49,11 @@ export interface DeleteButtonProps {
   handleDelete: (id: number) => void;
 }
 
-export interface ComboBoxProps { 
-  selected: number;
-  handleSelect: (action: 'tableId' | 'menuId' | 'qty', num: number) => void;
+export interface ComboBoxProps {
+  name: string; 
+  list: Menu[] | FormatTable[];
+  selected: number | string;
+  handleSelect: (num: number) => void;
 }
 
 export interface OrderFormat {
@@ -61,6 +63,7 @@ export interface OrderFormat {
 }
 
 export interface FormatTable {
-  tableId: number;
+  id: number;
+  name: string;
   orders: OrderFormat[];
 }

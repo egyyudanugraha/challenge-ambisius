@@ -6,8 +6,9 @@ import { Github, Globe } from 'lucide-react';
 import ResetButton from "@/components/custom/ResetButton";
 import MenuSection from "@/components/custom/section/MenuSection"
 import OrderSection from "@/components/custom/section/OrderSection";
-import Link from "next/link"
 import DapurSection from "@/components/custom/section/DapurSection";
+import KasirSection from "@/components/custom/section/KasirSection";
+import Link from "next/link"
 
 const Home = () => {  
   return (
@@ -65,7 +66,9 @@ const Home = () => {
             <TabsContent value="dapur">
               <DapurSection />
             </TabsContent>
-            <TabsContent value="kasir">Kasir</TabsContent>
+            <TabsContent value="kasir">
+              <KasirSection />
+            </TabsContent>
           </Tabs>
         </CardContent>
       </Card>

@@ -9,7 +9,11 @@ const OrderContext = createContext<OrderContext>({
   orders: [],
   getAllOrderTable: [],
   addOrder: () => {},
-  getOrderByTableId: () => {},
+  getOrderByTableId: () => ({
+    id: 0,
+    name: '',
+    orders: [],
+  }),
   resetOrder: () => {},
 });
 
@@ -27,7 +31,7 @@ const OrderProvider = ({ children }: {
 
   const getAllOrderTable = orders.reduce(transformData, []);
   const addOrder = (order: Order[]) => setOrders([...orders, ...order].sort((a, b) => a.tableId - b.tableId))
-  const getOrderByTableId = (tableId: number) => orders.filter((order) => order.tableId === tableId)
+  const getOrderByTableId = (tableId: number) => orders.filter((order) => order.tableId === tableId).reduce(transformData, [])[0]
   const resetOrder = () => setOrders([])
 
   return (
