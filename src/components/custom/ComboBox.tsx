@@ -28,11 +28,13 @@ const ComboBox = ({ name, list, selected, handleSelect }: ComboBoxProps) => {
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {list.find((item) => item.id === selected)?.name ?? `Pilih ${name}...`}
+          <div className="truncate">
+            {list.find((item) => item.id === selected)?.name ?? `Pilih ${name}...`}
+          </div>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0">
+      <PopoverContent className="p-0">
         <Command className="w-full">
           <CommandInput placeholder="Cari data..." />
           <CommandEmpty>Data tidak ditemukan.</CommandEmpty>
@@ -51,7 +53,9 @@ const ComboBox = ({ name, list, selected, handleSelect }: ComboBoxProps) => {
                     selected === item.id ? "opacity-100" : "opacity-0"
                   )}
                 />
-                {item.name}
+                <div className="break-all w-full">
+                  {item.name}
+                </div>
               </CommandItem>
             ))}
           </CommandGroup>

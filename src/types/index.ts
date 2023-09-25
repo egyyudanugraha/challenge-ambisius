@@ -16,6 +16,7 @@ export interface Order {
 export interface HeaderColumnProps<TData> {
   title: string;
   column: Column<TData, unknown>
+  className?: string;
 }
 
 export interface MenuContext {

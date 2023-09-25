@@ -45,7 +45,7 @@ const OrderSection = () => {
     },
     {
       accessorKey: 'menuId',
-      header: ({ column }) => <CustomHeader title='Nama menu' column={column} />,
+      header: ({ column }) => <CustomHeader title='Nama menu' column={column} className="w-60" />,
       cell: ({ row }) => {
         const menu = menus.find((menu) => menu.id === row.getValue('menuId'));
         return menu?.name;
@@ -53,7 +53,8 @@ const OrderSection = () => {
     },
     {
       id: 'satuan',
-      header: ({ column }) => <CustomHeader title='Harga satuan' column={column} />,
+      accessorKey: 'menuId',
+      header: ({ column }) => <CustomHeader title='Harga satuan' column={column} className="w-40" />,
       cell: ({ row }) => {
         const menu = menus.find((menu) => menu.id === row.getValue('menuId'));
         return `Rp. ${menu?.price.toLocaleString('id-ID')},-`;
@@ -65,6 +66,7 @@ const OrderSection = () => {
     },
     {
       id: 'total',
+      accessorKey: 'menuId',
       header: ({ column }) => <CustomHeader title='Total' column={column} />,
       cell: ({ row }) => {
         const menu = menus.find((menu) => menu.id === row.getValue('menuId'));
