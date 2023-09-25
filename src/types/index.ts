@@ -22,6 +22,7 @@ export interface HeaderColumnProps<TData> {
 export interface MenuContext {
   menus: Menu[];
   addMenu: (menu: Menu) => void;
+  findMenu: (id: number) => Menu | undefined;
   updateMenu: (id: number, updateMenu: Menu) => void;
   deleteMenu: (id: number) => void;
   resetMenu: () => void;

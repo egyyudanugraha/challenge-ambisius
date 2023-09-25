@@ -18,9 +18,20 @@ const formSchema = z.object({
 })
 
 const KasirSection = () => {
-  const [print, setPrint] = useState<FormatTable | null>()
+  const { findMenu } = useMenu()
   const { getAllOrderTable, getOrderByTableId } = useOrder()
-  const { menus } = useMenu()
+  const [print, setPrint] = useState<FormatTable>()
+
+  const chekMenuPrice = (menuId: number) => findMenu(menuId)?.price || 0
+  const chekMenuName = (menuId: number) => findMenu(menuId)?.name
+  const totalPriceWithQty = (menuId: number, qty: number) => !chekMenuPrice(menuId) ? 'Gratis!' : `Rp. ${(chekMenuPrice(menuId) * qty).toLocaleString('id-ID')},-`
+
+  const totalOrder = print?.orders.reduce((acc, order) => {
+    const priceMenu = chekMenuPrice(order.menuId)
+    if (priceMenu) return (order.qty * priceMenu) + acc
+    return acc
+  }, 0)  
+  const formatTotal = !totalOrder ? 'Gratis!' : `Rp. ${totalOrder.toLocaleString('id-ID')},-`
   
   
   const form = useForm<z.infer<typeof formSchema>>({
@@ -36,7 +47,7 @@ const KasirSection = () => {
   }
 
   const handleReset = () => {
-    setPrint(null)
+    setPrint(undefined)
     form.setValue('tableId', 0);
   }
 
@@ -84,10 +95,10 @@ const KasirSection = () => {
           <TableBody>
             {print.orders.map((order) => (
               <TableRow key={order.id}>
-                <TableCell className="font-medium">{menus.find((menu) => menu.id === order.menuId)?.name}</TableCell>
-                <TableCell>Rp. {(menus.find((menu) => menu.id === order.menuId)?.price)?.toLocaleString('id-ID')},-</TableCell>
+                <TableCell className="font-medium">{chekMenuName(order.menuId)}</TableCell>
+                <TableCell>Rp. {chekMenuPrice(order.menuId).toLocaleString('id-ID')},-</TableCell>
                 <TableCell>{order.qty}</TableCell>
-                <TableCell className="text-right">{(menus.find((menu) => menu.id === order.menuId)?.price || 0) === 0 ? 'Gratis!' : `Rp. ${((menus.find((menu) => menu.id === order.menuId)?.price || 0) * order.qty).toLocaleString('id-ID')},-`}</TableCell>
+                <TableCell className="text-right">{totalPriceWithQty(order.menuId, order.qty)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -95,7 +106,7 @@ const KasirSection = () => {
             <TableRow>
               <TableCell colSpan={3} className="font-bold text-right">Total</TableCell>
               <TableCell className="text-right font-bold">
-                Rp. {print.orders.reduce((acc, order) => ((menus.find((menu) => menu.id === order.menuId)?.price || 0) * order.qty) + acc, 0).toLocaleString('id-ID')},-
+                {formatTotal}
               </TableCell>
             </TableRow>
           </TableFooter>
